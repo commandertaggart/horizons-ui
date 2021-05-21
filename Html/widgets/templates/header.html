@@ -1,0 +1,103 @@
+<style>
+    #header {
+        display: inline-block;
+        box-sizing: border-box;
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 26px;
+        background-image: url(/images/hexagon.png);
+        background-size: contain;
+        background-repeat: repeat-x;
+        /* border-radius: 5px; */
+        text-align: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #header.alert-blue { background-color: blue; }
+    #header.alert-green { background-color: green; }
+    #header.alert-yellow { background-color: gold; }
+    #header.alert-red { background-color: red; }
+
+    #settings-button {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 10px;
+        width: 26px;
+        height: 26px;
+        background-image: url(/images/interface-icons.png);
+        background-size: 208px 182px;
+        background-position: -78px 0px;
+    }
+
+    #socket-indicator {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 8px;
+        margin-left: 8px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: red;
+    }
+    #socket-indicator.online {
+        background-color: green;
+    }
+
+    #title {
+        display: inline-block;
+        text-transform: uppercase;
+        color: white;
+        font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+        text-shadow: 1px 1px 2px #000000;
+    }
+
+    #roles {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 46px;
+    }
+
+    .role-indicator {
+        display: inline-block;
+        width: 28px;
+        height: 10px;
+        color: grey;
+        background-color: black;
+        text-align: center;
+        font-size: 12px;
+        line-height: .9;
+        font-weight: bold;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 4px;
+        margin: 3px;
+        cursor: pointer;
+    }
+    .role-indicator.inuse {
+        color: white;
+        background-color: darkblue;
+    }
+
+</style>
+<div id="header">
+    <div id="settings-button">
+        <div id="socket-indicator"></div>
+    </div>
+    <div id="title"></div>
+    <div id="roles">
+        <div id="role-flight"   class="role-indicator">FLT</div>
+        <div id="role-comms"    class="role-indicator">COM</div>
+        <div id="role-science"  class="role-indicator">SCI</div>
+        <div id="role-engineer" class="role-indicator">ENG</div>
+        <div id="role-tactical" class="role-indicator">TAC</div>
+    </div>
+    <div id="input-indicator"></div>
+</div>
