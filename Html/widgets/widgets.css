@@ -1,0 +1,9 @@
+:root {
+    --hz-icon-scale: var(--hz-skin-icon-scale, 1);
+    --hz-icon-scale-x: var(--hz-skin-icon-scale-x, var(--hz-icon-scale));
+    --hz-icon-scale-y: var(--hz-skin-icon-scale-y, var(--hz-icon-scale));
+
+    --hz-tab-icon-size: var(--hz-skin-tab-icon-size, 60px);
+    --hz-tab-icon-width: var(--hz-skin-tab-icon-width, var(--hz-tab-icon-size));
+    --hz-tab-icon-height: var(--hz-skin-tab-icon-height, var(--hz-tab-icon-size));
+}

@@ -1,0 +1,3 @@
+hz-bits-icon {
+    transform: rotate(var(--hz-rotation, 0deg));
+}

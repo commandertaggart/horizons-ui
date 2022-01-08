@@ -1,0 +1,15 @@
+.hz-layout-panel {
+    display: block;
+    background-color: var(--hz-panel-background-color, #252525);
+    border-radius: var(--hz-panel-border-radius, 6px 6px 6px 6px);
+}
+
+.hz-layout-panel .panel-icon {
+    position: absolute;
+    top: var(--hz-panel-icon-offset-x, 0);
+    left: var(--hz-panel-icon-offset-y, 0);
+}
+
+.hz-layout-group-panel > .hz-layout-panel .panel-icon:not(.force-icon) {
+    display: none;
+}

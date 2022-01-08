@@ -1,0 +1,22 @@
+<hz-bits-icon 
+    image="/images/lock-flight.png"
+    width="60"
+    height="60"
+></hz-bits-icon>
+<hz-bits-icon id="envelope"></hz-bits-icon>
+<hz-bits-icon id="comments-outline" size="32"></hz-bits-icon>
+<hz-bits-icon id="earth" size="80"></hz-bits-icon>
+
+<hz-system use="Test">
+    <hz-bits-button>Plain Button</hz-bits-button>
+    <hz-bits-button 
+        v-on:click="$horizons.Test.testBool = !$horizons.Test.testBool" 
+        v-bind:class="{ alert: $horizons.Test?.testBool }"
+    >Active</hz-bits-button>
+    <hz-bits-button 
+        v-on:click="++$horizons.Test.testNumber"
+    >Increase: {{ $horizons.Test?.TestNumber }}</hz-bits-button>
+    <hz-bits-button 
+        v-on:click="--$horizons.Test.testNumber"
+    >Decrease: {{ $horizons.Test?.TestNumber }}</hz-bits-button>
+</hz-system>

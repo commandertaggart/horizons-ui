@@ -1,0 +1,17 @@
+<hz-layout-container class="left-bar">
+    <hz-layout-group tabs="left-top">
+        <hz-layout-panel icon="compass">
+            <hz-layout-panel-header>Heading</hz-layout-panel-header>
+            <hz-vessel-heading target="$vessel"></hz-vessel-heading>
+            <hz-layout-panel-header>Rotation</hz-layout-panel-header>
+            <hz-vessel-rotation target="$vessel"></hz-vessel-rotation>
+            <hz-layout-panel-header>Location</hz-layout-panel-header>
+            <hz-vessel-location target="$vessel"></hz-vessel-location>
+        </hz-layout-panel>
+        <hz-layout-panel icon="lightbulb">
+            <hz-layout-panel-header>External Lights</hz-layout-panel-header>
+            <hz-bits-button class="wide" bind="Vessel.RunningLights">Running Lights</hz-bits-button>
+            <hz-bits-button class="wide" bind="Vessel.NavLights">Nav. Lights</hz-bits-button>
+        </hz-layout-panel>
+    </hz-layout-group>
+</hz-layout-container>

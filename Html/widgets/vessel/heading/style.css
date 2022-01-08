@@ -1,0 +1,4 @@
+.hz-widget-shadow {
+    color: var(--hz-data-color, white);
+    font-size: var(--hz-data-font-size-large, 24px);
+}

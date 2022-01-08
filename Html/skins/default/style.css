@@ -1,0 +1,20 @@
+
+:root {
+    --hz-skin-alert-0-color: gray;
+    --hz-skin-alert-1-color: blue;
+    --hz-skin-alert-2-color: green;
+    --hz-skin-alert-3-color: yellow;
+    --hz-skin-alert-4-color: red;
+}
+
+.left-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20%;
+}
+
+.hz-layout-inert {
+    display: contents;
+}

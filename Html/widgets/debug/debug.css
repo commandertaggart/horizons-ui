@@ -1,0 +1,30 @@
+
+.debugpanel {
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    padding-top: 10px;
+    border: 5px dotted yellow;
+    border-radius: 10px;
+}
+
+.group {
+    margin-top: 10px;
+    border-bottom: 2px solid gray;
+}
+
+.grouplabel {
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+}
+
+.proplabel {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.propvalue {
+    font-size: 12px;
+    font-family: monospace;
+}

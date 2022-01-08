@@ -1,0 +1,14 @@
+.hz-bits-button {
+    appearance: unset;
+    border-width: var(--hz-button-border-width, 1px);
+    border-color: var(--hz-button-border-color, cyan);
+    border-radius: var(--hz-button-border-radius, 6px);
+    background: var(--hz-button-background, transparent);
+    color: var(--hz-button-text-color, cyan);
+}
+
+.hz-bits-button.active {
+    border-color: var(--hz-button-active-border-color, cyan);
+    background: var(--hz-button-active-background, yellow);
+    color: var(--hz-button-active-text-color, black);
+}

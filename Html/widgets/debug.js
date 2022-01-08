@@ -1,5 +1,5 @@
 
-define(['hydra/net', 'jquery'], (HydraNet, $) => {
+define(['jquery', 'widgets/horizons-widget'], ($, HorizonsWidget) => {
     const template = /*html*/`
         <style>
             #debug_output {
@@ -30,10 +30,12 @@ define(['hydra/net', 'jquery'], (HydraNet, $) => {
                 padding: 0;
             }
         </style>
-        <div id="debug_output"></div>
+        <div id="debug_output">
+            <slot></slot>
+        </div>
 `;
 
-    class HzDebug extends HTMLElement {
+    class HzDebug extends HorizonsWidget {
         constructor() {
             super();
             this.lines = [];
@@ -49,10 +51,11 @@ define(['hydra/net', 'jquery'], (HydraNet, $) => {
             this.$root = $(this.shadowRoot);
             this.$root.html(template);
 
+            /*
             this.$log = this.$root.find('#debug_output');
 
             this.subscription = HydraNet.Subscribe('*', (messageType, messagePayload) => {
-                const $line = $(/*html*/`
+                const $line = $(/ *html* /`
                     <div class="debug_line">
                         <span class="message_type">${messageType}</span>
                         <span class="message_payload">${JSON.stringify(messagePayload, null, 2)}</span>
@@ -65,6 +68,7 @@ define(['hydra/net', 'jquery'], (HydraNet, $) => {
                     this.lines.shift().remove();
                 }
             });
+            */
         }
 
         disconnectedCallback() {
@@ -82,4 +86,5 @@ define(['hydra/net', 'jquery'], (HydraNet, $) => {
     }
 
     customElements.define('hz-debug', HzDebug);
+
 });

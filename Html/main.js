@@ -1,6 +1,6 @@
 
 requirejs.config({
-    baseUrl: 'Taggart/',
+    baseUrl: '/',
     paths: {
         'jquery': 'lib/jquery-3.6.0.min',
         'jsviews': 'lib/jsviews',
@@ -17,11 +17,14 @@ requirejs.config({
 
 // This finds all undefined elements whose tag name starts with 'hydra-', and attempts to load a script for that element from the widgets directory.
 define(['hydra/net', 'jquery', 'jsviews', 'text'], (HydraNet) => {
-    const HORIZONS_WIDGET_PREFIX = 'hz-';
     let undefinedElements = document.querySelectorAll(':not(:defined)');
     let requireList = [... undefinedElements]
-        .filter((el) => el.localName.startsWith(HORIZONS_WIDGET_PREFIX))
-        .map((el) => `widgets/${el.localName.substring(HORIZONS_WIDGET_PREFIX.length).replace('-','/')}`);
+        .map((el) => el.localName.split('-'))
+        .filter((parts) => parts[0] in window.CustomElementPrefixes)
+        .map((parts) => {
+            parts[0] = window.CustomElementPrefixes[parts[0]];
+            return parts.join('/');
+        });
     require(requireList, () => (void (0)),
         (err) => {
             if (err.requireModules) {
@@ -32,7 +35,7 @@ define(['hydra/net', 'jquery', 'jsviews', 'text'], (HydraNet) => {
     );
 
     if (typeof(HydraVersion) !== 'undefined') {
-        HydraNet.Connect(HydraVersion);
+        HydraNet.Connect(Window.ScreenName, HydraVersion, HydraNet.ClientType.INLINE, /* subscribe to all */ true);
         window.addEventListener('unload', () => {
             HydraNet.Disconnect();
         })

@@ -1,0 +1,16 @@
+
+.hz-bits-icon {
+    display: inline-block
+}
+
+.hz-bits-icon {
+    font-family: HorizonsIcon;
+    font-weight: normal;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+
+.hz-bits-icon:not(.image-icon)::before { content: var(--hz-icon-content, 'H'); }

@@ -1,24 +1,56 @@
+/*
+    HzSession
+    Owns session metagame data, settings and console state outside of gameplay.  Also relays top level game events.
+*/
+import HzSystem from '/horizons/system.js'
 
-define(['hydra/net', 'util/subscribableEvent', 'rxjs'], (HydraNet, SubscribableEvent, Rx) => {
+const ConsoleStatus = {
+    IDLE: 'Idle',
+    OFFLINE: 'Offline',
+    ONLINE: 'Online',
+    MISSION_BRIEFING: 'Mission Briefing',
+    MISSION_SUMMARY: 'Mission Summary',
+    BROKEN: 'Broken',
+};
 
-    const sessionClearEvent = new SubscribableEvent();
-    const sessionState = new Rx.BehaviorSubject('Idle');
+const ConsoleLevel = {
+    NOVICE: 'Novice',
+    INTERMEDIATE: 'Intermediate',
+    ADVANCED: 'Advanced',
+};
 
-    HydraNet.Subscribe('SESSION', (messageType, messagePayload) => {
-        if (messagePayload.State !== sessionState.value) {
-            sessionState.next(messagePayload.State);
-        }
-    });
+class HorizonsSession extends HzSystem {
+    constructor() {
+        super();
 
-    HzSession = {
-        OnSessionClear = (callback) => {
-            return sessionClearEvent.subscribe(callback);
-        },
+        this._property('CommOverride', 'SESSION');
+        this._property('EncountersEnabled', 'SESSION');
+        this._property('Mode', 'SESSION');
+        this._property('State', 'SESSION');
 
-        sessionState,
+        this._property('Production', 'SETTINGS', { send: false });
+        this._property('Debug', 'SETTINGS');
 
+        this._property('ServerStartTime', 'SVRS', { send: false, packetHandler: (t) => new Date(t) });
+        this._property('ServerScreen', 'SCREEN', { send: false });
         
-    };
+        this._property('ConsoleLevel', 'CONSOLE-LEVEL');
+        this._property('ConsoleStatus', 'CONSOLE-STATUS', { receive: false, defaultValue: ConsoleStatus.IDLE });
 
-    return HzSession;
-});
+        this._event('Reset', 'RST');
+        this._event('Break', 'CONSOLE-BREAK');
+
+        this.addEventListener('Reset', () => {
+            this.ConsoleStatus = ConsoleStatus.IDLE;
+        });
+        this.addEventListener('Break', () => {
+            this.ConsoleStatus = ConsoleStatus.BROKEN;
+        });
+    }
+}
+
+HorizonsSession.ConsoleStatus = ConsoleStatus;
+HorizonsSession.ConsoleLevel = ConsoleLevel;
+
+const HzSession = new HorizonsSession();
+export default HzSession;

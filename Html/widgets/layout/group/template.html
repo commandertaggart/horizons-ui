@@ -1,0 +1,19 @@
+<div class="hz-layout-group">
+    <div class="hz-layout-group-tabs" v-bind:tab-position="tabPosition">
+        <div
+            v-for="(icon, index) in icons"
+            class="hz-layout-group-tab"
+            v-bind:class="{ 'selected': (selected === index) }"
+            v-on:click="selected = index">
+            <hz-bits-icon v-bind:id="icon"></hz-bits-icon>   
+        </div>
+    </div>
+    <div class="hz-layout-group-panels" v-bind:tab-position="tabPosition">
+        <div
+            v-for="(panel, index) in panels"
+            class="hz-layout-group-panel"
+            v-bind:class="{ 'selected-panel': (selected === index) }">
+            {{panel}}
+        </div>
+    </div>
+</div>

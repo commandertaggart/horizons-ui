@@ -7,17 +7,32 @@
         <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="viewport" content="width=1600, user-scalable=yes" />
         <link rel="SHORTCUT ICON" href="/favicon.ico" />
-        <link rel="stylesheet" href="Taggart/main.css" />
+        <link rel="stylesheet" href="/main.css" />
+        <link rel="stylesheet" href="/widgets/widgets.css" />
+        <link id="skin-style" rel="stylesheet" href="/skins/default/style.css" />
+        <link id="skin-style" rel="stylesheet" href="/skins/default/icons.css" />
 
         <script>
             window.HydraVersion = '[Server.LocalVersion]';
-            window.MOD = 'Taggart';
+            window.Screenname = '[Screen.Title]';
+            window.CustomElementPrefixes = {
+                'hz': 'widgets'
+            };
         </script>
-        <script data-main="Taggart/main.js" src="Taggart/lib/require.js"></script>
+        <script src="/lib/handlebars-v4.7.7.js"></script>
+        <script type="module">
+            import HydraNet from '/hydra/net.js';
+            import WidgetLoader from '/widgets/util/WidgetLoader.js';
 
+            if (typeof(HydraVersion) !== 'undefined') {
+                HydraNet.Connect(Window.ScreenName, HydraVersion, HydraNet.ClientType.INLINE, /* subscribe to all */ false);
+                window.addEventListener('unload', () => {
+                    HydraNet.Disconnect();
+                })
+            }
+        </script>
     </head>
     <body>
-        <hz-header title="[Screen.Title]"></hz-header>
-        [Screen.Content]
+[Screen.Content]
     </body>
 </html>

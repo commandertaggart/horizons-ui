@@ -14,7 +14,7 @@ define(['widgets/map/object-renderer', 'three', 'horizons/gameObjects/playerVess
         }
 
         connectedCallback() {
-            this._playerVesselTex = MapObjectRenderer.TextureLoader.load(`/${MOD}/images/player-vessel.png`);
+            this._playerVesselTex = MapObjectRenderer.TextureLoader.load(`/images/player-vessel.png`);
             this._playerVesselTex.magFilter = THREE.NearestFilter;
         }
 
