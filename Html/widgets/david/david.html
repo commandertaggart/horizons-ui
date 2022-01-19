@@ -1,0 +1,11 @@
+<div>
+    Click the first button to connect to the data source. The data source's data will populate the second button after a second. You can click the second button to decrement teh value.
+
+    <button v-on:click="serviceManager.connectToService('David', '/widgets/david/davidService.js')">
+        connect to data source
+    </button>
+
+    <button v-on:click="services.David.values.testValue1--">
+        I can be clicked: {{ services.David?.values?.testValue1 }}
+    </button>
+</div>

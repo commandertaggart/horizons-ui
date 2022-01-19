@@ -1,6 +1,8 @@
 import Vue from "/lib/vue.js";
 import WidgetLoader from "/widgets/util/WidgetLoader.js";
 import WidgetBinding from "/widgets/util/WidgetBinding.js";
+import serviceManager from "./serviceManager.js";
+
 
 Vue.use(WidgetBinding);
 
@@ -12,9 +14,17 @@ export default function HorizonsPage(query) {
     nodes.forEach(async (node) => {
         const components = await WidgetLoader.loadComponetsFromUndefinedElements(node);
 
-        new Vue({
+        const vue = new Vue({
             el: node,
-            components
+            components,
+            data: {
+                serviceManager,
+                services: {},
+            }
         });
+
+        serviceManager.onServiceConnected = (name, value) => {
+            vue.$set(vue.services, name, value); // this is the key
+        };
     });
 } 
