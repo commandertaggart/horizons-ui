@@ -1,0 +1,9 @@
+<div>
+    <div>The number is ${Test.testNumber}</div>
+    <div>The bool is 
+        <template if:="Test.testBool">true</template>
+        <template if:="!Test.testBool">false</template>
+    </div>
+    <button on:click="++Test.testNumber">Increment</button>
+    <div>The fox says ${Test.testString}</div>
+</div>
