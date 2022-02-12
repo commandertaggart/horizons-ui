@@ -3,6 +3,7 @@
     Owns session metagame data, settings and console state outside of gameplay.  Also relays top level game events.
 */
 import HzSystem from '/horizons/system.js'
+import HydraNet from '/hydra/net.js'
 
 const ConsoleStatus = {
     IDLE: 'Idle',
@@ -36,6 +37,11 @@ class HorizonsSession extends HzSystem {
         
         this._property('ConsoleLevel', 'CONSOLE-LEVEL');
         this._property('ConsoleStatus', 'CONSOLE-STATUS', { receive: false, defaultValue: ConsoleStatus.IDLE });
+
+        this._property('Roles', 'ROLES', { defaultValue: {}, packetHandler: (msg) => msg });
+
+        this._property('ConnectionStatus', 'NONE', { send: false, receive: false, setter: true, defaultValue: false });
+        HydraNet.OnStatus(status => this.ConnectionStatus = !!status);
 
         this._event('Reset', 'RST');
         this._event('Break', 'CONSOLE-BREAK');

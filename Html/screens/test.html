@@ -1,35 +1,7 @@
 <script type="module">
-    import HzBitsIcon from '/widgets/bits/icon/index.js';
+    import HorizonsWidget from '/widgets/horizons-widget.js';
+    HorizonsWidget.use({
+        srcRoot: '/widgets/'
+    });
 </script>
-<script type="module">
-    import HorizonsPage from '/horizons-page.js';
-    window.loadTest = async (file) => {
-        const testFile = await fetch(file);
-
-        const container = document.getElementById('test-container');
-        container.innerHTML = '';
-
-        const rootNode = document.createElement('div');
-        rootNode.id = 'test-root-node';
-        rootNode.innerHTML = await testFile.text();
-        container.appendChild(rootNode);
-
-        HorizonsPage(rootNode);
-    };
-</script>
-<style>
-    .left {
-        display: block;
-        padding: 32px;
-    }
-    .right {
-        display: block;
-    }
-</style>
-<div id="hz-widget-root">
-    <div class="left">
-        <button onclick="loadTest('/widgets/bits/test.html')">hz-bits-*</button>
-        <button onclick="loadTest('/widgets/layout/test.html')">hz-layout-*</button>
-    </div>
-    <div class="right" id="test-container"></div>
-</div>
+<hz-widget src="util/test/index.js" />

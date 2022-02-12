@@ -1,4 +1,6 @@
 
+import WidgetBinding from "/widgets/util/WidgetBinding.js";
+
 const doLog = true;
 const log = doLog ? console.log.bind(console) : () => void(0);
 
@@ -103,6 +105,18 @@ ${JSON.stringify(spec.data(), null, 2)}`);
         log(`${promises.length} components loaded`);
 
         return components;
+    },
+
+    initPage(queryOrNodes) {
+        const nodes = (typeof(queryOrNodes) === 'string') ?
+            Array.from(document.querySelectorAll(queryOrNodes)) :
+            (queryOrNodes instanceof NodeList || Array.isArray(queryOrNodes)) ? queryOrNodes : [queryOrNodes];
+
+        Array.prototype.forEach.call(nodes, async (node) => {
+            const components = await WidgetLoader.loadComponetsFromUndefinedElements(node);
+
+            WidgetBinding.init(node, components);
+        });
     }
 }
 

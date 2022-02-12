@@ -1,17 +1,44 @@
-<hz-layout-container class="left-bar">
-    <hz-layout-group tabs="left-top">
-        <hz-layout-panel icon="compass">
-            <hz-layout-panel-header>Heading</hz-layout-panel-header>
-            <hz-vessel-heading target="$vessel"></hz-vessel-heading>
-            <hz-layout-panel-header>Rotation</hz-layout-panel-header>
-            <hz-vessel-rotation target="$vessel"></hz-vessel-rotation>
-            <hz-layout-panel-header>Location</hz-layout-panel-header>
-            <hz-vessel-location target="$vessel"></hz-vessel-location>
-        </hz-layout-panel>
-        <hz-layout-panel icon="lightbulb">
-            <hz-layout-panel-header>External Lights</hz-layout-panel-header>
-            <hz-bits-button class="wide" bind="Vessel.RunningLights">Running Lights</hz-bits-button>
-            <hz-bits-button class="wide" bind="Vessel.NavLights">Nav. Lights</hz-bits-button>
-        </hz-layout-panel>
-    </hz-layout-group>
-</hz-layout-container>
+<script type="module">
+    import HzUIDefaultLayout from '/widgets/layout/default/index.js';
+</script>
+<hzui-default-layout>
+    <hz-widget slot="header" src="/widgets/screen/header/index.js">FLIGHT</hz-widget>
+    <hzui-tabgroup slot="left" tab-position="left">
+        <div tab-icon="compass" tab-name="Positional Information">
+            <hz-widget src="/widgets/vessel/heading/index.js" target="$vessel"></hz-widget>
+            <hz-widget src="/widgets/vessel/rotation/index.js" target="$vessel"></hz-widget>
+            <hz-widget src="/widgets/vessel/location/index.js" target="$vessel"></hz-widget>
+        </div>
+        <div tab-icon="lightbulb" tab-name="Running Lights">
+            <hzui-button id="runninglights" tip="Running Lights|Click to toggle">Running Lights</hzui-button>
+            <hzui-button id="navlights" tip="Navigation Lights|Click to toggle">Nav. Lights</hzui-button>
+        </div>
+    </hzui-tabgroup>
+    <hzui-tabgroup slot="left" tab-position="left">
+        <div tab-icon="drone" tab-name="Drones">
+            <hz-widget src="/widgets/contacts/list/index.js" filter="type=drone&owner=$vessel"></hz-widget>
+        </div>
+    </hzui-tabgroup>
+    <hzui-tabgroup slot="left" tab-position="left">
+        <div tab-icon="send" tab-name="Thruster Control">
+            <hz-widget src="/widgets/vessel/opmode/index.js" target="$vessel"></hz-widget>
+            <hz-widget src="/widgets/vessel/thrusters/index.js" target="$vessel"></hz-widget>
+        </div>
+    </hzui-tabgroup>
+    <hzui-tabgroup slot="right" tab-position="right">
+        <div tab-icon="target" tab-name="Targeting">
+            <hz-widget src="/widgets/contacts/info/index.js" target="$none"></hz-widget>
+            <hz-widget src="/widgets/contacts/target-select/index.js"></hz-widget>
+        </div>
+    </hzui-tabgroup>
+    <hzui-tabgroup slot="right" tab-position="right">
+        <div tab-icon="stored-waypoints" tab-name="Stored Waypoints">
+            <hz-widget src="/widgets/waypoints/stored/index.js"></hz-widget>
+        </div>
+        <div tab-icon="stars" tab-name="Nearby Destinations">
+            <hz-widget src="/widgets/galaxy/nearby/index.js"></hz-widget>
+        </div>
+    </hzui-tabgroup>
+    <div slot="center" style="background-color: yellow; width: 100%;"></div>
+    <hz-widget slot="footer" src="/widgets/screen/footer/index.js"></hz-widget>
+</hzui-default-layout>

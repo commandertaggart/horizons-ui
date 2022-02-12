@@ -1,5 +1,6 @@
 <resource fileversion="1.0">
 	<screens id="Test">
+		<screen name="Flight" icon="Monitor" base="base.html" url="taggart-flight" file="screens/flight.html" packets="" />
 		<screen name="Test" icon="Monitor" base="base.html" url="test" file="screens/test.html" packets="">A screen for testing UI components</screen>
 	</screens>
 </resource>

@@ -13,7 +13,7 @@ function union(setA, setB) {
 }
 
 export default class HydraClient{
-    constructor(clientName = 'Taggart', protocolVersion = '25', devSubscribeAll = false) {
+    constructor(clientName = 'Taggart', protocolVersion = '29', devSubscribeAll = false) {
         this._clientName = clientName;
 
         this.protocolVersion = protocolVersion;

@@ -10,13 +10,13 @@
 <hz-system use="Test">
     <hz-bits-button>Plain Button</hz-bits-button>
     <hz-bits-button 
-        v-on:click="$horizons.Test.testBool = !$horizons.Test.testBool" 
-        v-bind:class="{ alert: $horizons.Test?.testBool }"
+        v-on:click="$root.horizons.Test.testBool = !$root.horizons.Test.testBool" 
+        v-bind:class="{ alert: $root.horizons.Test?.testBool }"
     >Active</hz-bits-button>
     <hz-bits-button 
-        v-on:click="++$horizons.Test.testNumber"
-    >Increase: {{ $horizons.Test?.TestNumber }}</hz-bits-button>
+        v-on:click="++$root.horizons.Test.testNumber"
+    >Increase: {{ $root.horizons.Test?.testNumber }}</hz-bits-button>
     <hz-bits-button 
-        v-on:click="--$horizons.Test.testNumber"
-    >Decrease: {{ $horizons.Test?.TestNumber }}</hz-bits-button>
+        v-on:click="--$root.horizons.Test.testNumber"
+    >Decrease: {{ $root.horizons.Test?.testNumber }}</hz-bits-button>
 </hz-system>

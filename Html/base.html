@@ -14,15 +14,11 @@
 
         <script>
             window.HydraVersion = '[Server.LocalVersion]';
-            window.Screenname = '[Screen.Title]';
-            window.CustomElementPrefixes = {
-                'hz': 'widgets'
-            };
+            window.ScreenName = '[Screen.Title]';
         </script>
-        <script src="/lib/handlebars-v4.7.7.js"></script>
         <script type="module">
             import HydraNet from '/hydra/net.js';
-            import WidgetLoader from '/widgets/util/WidgetLoader.js';
+            import HorizonsWidget from '/widgets/horizons-widget.js';
 
             if (typeof(HydraVersion) !== 'undefined') {
                 HydraNet.Connect(Window.ScreenName, HydraVersion, HydraNet.ClientType.INLINE, /* subscribe to all */ false);
@@ -30,6 +26,8 @@
                     HydraNet.Disconnect();
                 })
             }
+
+            HorizonsWidget.use();
         </script>
     </head>
     <body>

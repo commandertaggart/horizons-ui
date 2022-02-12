@@ -24,7 +24,7 @@ const HydraNet = {
         if (clientType == HydraNet.ClientType.INLINE) {
             if (!this.worker) {
                 const { default: HydraClient } = await import('/hydra/client.js');
-                this.worker = new HydraClient(clientName, '25', devSubscribeAll);
+                this.worker = new HydraClient(clientName, '29', devSubscribeAll);
                 const port = {
                     postMessage: (event) => {
                         if (event) {
@@ -136,13 +136,23 @@ const HydraNet = {
                     let subs = this.packetSubscriptions[message.messageType];
                     if (subs) {
                         for (const sub of subs) {
-                            sub(message.messageType, message.messagePayload);
+                            try {
+                                sub(message.messageType, message.messagePayload);
+                            }
+                            catch (ex) {
+                                console.error(ex);
+                            }
                         }
                     }
                     subs = this.packetSubscriptions['*'];
                     if (subs) {
                         for (const sub of subs) {
-                            sub(message.messageType, message.messagePayload);
+                            try {
+                                sub(message.messageType, message.messagePayload);
+                            }
+                            catch (ex) {
+                                console.error(ex);
+                            }
                         }
                     }
                 }
@@ -152,7 +162,12 @@ const HydraNet = {
                     if (message.status !== this.connectionStatus) {
                         this.connectionStatus = message.status;
                         for (const sub of this.statusSubscriptions) {
-                            sub(this.connectionStatus);
+                            try {
+                                sub(this.connectionStatus);
+                            }
+                            catch (ex) {
+                                console.error(ex);
+                            }
                         }
                     }
                 }

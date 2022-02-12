@@ -1,15 +1,15 @@
 
-import HorizonsWidget from "/widgets/horizons-widget.js";
+import Test from '/horizons/test.js';
 
-export default class HzUtilTest extends HorizonsWidget {
-    constructor() {
-        super({
-            template: '/widgets/util/test/template.html',
-            styles: [
-                '/widgets/util/test/style.css'
-            ]
-        })
-    }
+export default async function HzTestWidget(hzWidget) {
+    await hzWidget.setTemplate('/widgets/util/test/template.html');
+
+    hzWidget.bindSystem(Test, {
+        testBool: { onUpdate: 'setLabel', onclick: () => Test.testBool = !Test.testBool }, 
+        testNumber: { onUpdate: 'setLabel', onclick: () => ++Test.testNumber }, 
+        testString: [
+            { onUpdate: 'setValue' }, 
+            { elementId: 'newString', onkeyup: ({ target }) => Test.testString = target.value }
+        ]
+    });
 }
-
-HorizonsWidget.register('hz-util-test', HzUtilTest);

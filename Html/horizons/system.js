@@ -57,18 +57,12 @@ export default class HzSystem extends EventTarget {
         }
     }
 
-    /*
-    useProperty(property, callback, deps) {
-        const cb = ({value}) => callback(value);
-        return useEffect(() => {
-            this.addEventListener(property, cb)
-            return () => this.removeEventListener(property, cb);
-        }, deps);
-    }
-    */
-
     _property(name, packetName, 
-        { packetHandler, setter, defaultValue, receive = true, send = true } = {}) {
+        { packetHandler, setter, defaultValue, receive = true, send = true, localSetEvent } = {}) {
+
+        if (typeof (localSetEvent) === 'undefined') {
+            localSetEvent = !send;
+        }
 
         this[PROPS][name] = {
             name,
@@ -80,8 +74,9 @@ export default class HzSystem extends EventTarget {
         };
 
         const descriptor = {
+            enumerable: true,
             get: () => this[PROPS][name].value
-        }
+        };
         if (send || setter) {
             descriptor.set = (newValue) => {
                 const prop = this[PROPS][name];
@@ -92,16 +87,24 @@ export default class HzSystem extends EventTarget {
                 if (send) {
                     HydraNet.Send(typeof(send) === 'string' ? send : packetName, newValue)
                 }
+                if (localSetEvent) {
+                    this.dispatchEvent({
+                        type: name,
+                        target: this,
+                        property: name,
+                        value: prop.value
+                    });
+                }
             }
         }
-
+ 
         Object.defineProperty(this, name, descriptor);
 
         if (defaultValue !== undefined) {
             this[name] = defaultValue;
         }
     }
-
+ 
     _event(name, packetName) {
         this[PROPS][name] = {
             name,
@@ -111,5 +114,21 @@ export default class HzSystem extends EventTarget {
             value: undefined,
             subscription: null
         }
+    }
+
+    getPropertyNames() {
+        return Object.keys(this).filter(k => !!this[PROPS][k]);
+    }
+    getPropertyDefinitions() {
+        const defs = {};
+        this.getPropertyNames().forEach(key => {
+            defs[key] = {
+                configurable: true,
+                enumerable: true,
+                writeable: !!this[PROPS][key].setter,
+                value: this[PROPS][key].value
+            };
+        });
+        return defs;
     }
 }

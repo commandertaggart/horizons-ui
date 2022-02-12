@@ -11,6 +11,8 @@ const IconLibrary = {
     'comments': 'C',
     'comments-outline': 'c',
     'compass': 'k',
-    'lightbulb': 'l'
+    'lightbulb': 'l',
+    'mouse': 'm',
+    'touch': 't'
 };
 export default IconLibrary;

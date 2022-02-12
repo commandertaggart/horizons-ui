@@ -1,73 +1,49 @@
 
-const PROMISE = Symbol('promise');
-const MODULE = Symbol('module');
-const SUBSCRIPTIONS = Symbol('subscriptions');
-const DESTROY = Symbol('destroy');
-
-const handler = {
-    get(target, prop) {
-        if (!(prop instanceof Symbol)) {
-            if (!target[SUBSCRIPTIONS].get(prop)) {
-                const listener = ({ property, value}) => target[property] = value;
-                target[SUBSCRIPTIONS].set(prop, listener);
-                target[MODULE].addEventListener(prop, listener);
-            }
-        }
-        return target[prop];
-    },
-    set(target, prop, value) {
-        if (!(prop instanceof Symbol)) {
-            try {
-                target[MODULE][prop] = value;
-            }
-            catch (err) {
-                console.warn(err);
-            }
-        }
-        target[prop] = value;
-    }
-}
-
-function newSystem(name) {
-    return {
-        [SUBSCRIPTIONS]: new Map(),
-        [PROMISE]: null,
-        [MODULE]: null,
-        [DESTROY]() {
-            for (const [key, value] in this[SUBSCRIPTIONS].entries()) {
-                this[MODULE].removeEventListener(key, value);
-            }
-            delete systems[name];
-        }
-    }
-}
+import Vue from '/lib/vue.js';
+import SystemProxy from './SystemProxy.js';
 
 const systems = {};
+const vues = new Map();
 
 const WidgetBinding = {
-    install(Vue, _options) {
-        Vue.prototype.$horizons =
-        Vue.prototype.$hz = systems;
+
+    init(el, components) {
+        vues.set(el, new Vue({
+            el, components,
+            data: {
+                horizons: systems
+            }
+        }));
     },
 
     addSystem(name, path, onload = () => void(0)) {
-        const system = systems[name] || newSystem(name);
+        if(!(name in systems)) {
+            systems[name] = SystemProxy(path).then(system => {
+                for (const vue in vues.values()) {
+                    vue.set(vue.horizons, name, system);
+                }
 
-        if (!system[MODULE]) {
-            system[PROMISE] = import(path).then(module => {
-                system[MODULE] = module.default;
-                return system;
+                onload();
             });
         }
-
-        return systems[name] = system;
     },
 
     removeSystem(name) {
         if (name in systems) {
-            systems[name][DESTROY]();
+            if (systems[name] instanceof Promise) {
+                systems[name].then(s => s[SystemProxy.DESTROY]());
+            }
+            else {
+                systems[name][SystemProxy.DESTROY]();
+            }
+
+            for (const vue in vues.values()) {
+                vue.delete(vue.horizons, name);
+            }
+
+            delete systems[name];
         }
-    },
+    }
 }
 
 export default WidgetBinding;
