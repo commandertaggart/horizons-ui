@@ -22,7 +22,7 @@ export default class HzUIIcon extends HorizonsElement {
 }
         `);
 
-        this.setTemplate(/*html*/`<div class="hzui icon"></div>`).then(() => {
+        this.setContent(/*html*/`<div class="hzui icon"></div>`).then(() => {
             this.addEventListener('image', ({ newValue }) => this.setImage(newValue));
             this.addEventListener('size', ({ newValue }) => this.setSize(newValue));
         });

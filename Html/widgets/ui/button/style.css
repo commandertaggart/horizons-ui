@@ -1,0 +1,14 @@
+
+button.hzui {
+    appearance: unset;
+    background-color: #227;
+    border: 2px solid #299;
+    border-radius: 8px;
+    color: #299;
+    padding: 8px;
+    font-size: 16px;
+}
+
+button.hzui:hover {
+    background-color: #22c;
+}

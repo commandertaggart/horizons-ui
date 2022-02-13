@@ -25,7 +25,23 @@ export default class HorizonsElement extends HTMLElement {
         this[ADJUSTING_ATTRIBUTE] = false;
         this[ROOT_NODE] = this;
 
-        this[PARAMS] = this.constructor.parameters || {};
+        this.setParameters(this.constructor.parameters);
+
+        this[OBSERVER] = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes') {
+                    this.attributeChangedCallback(
+                        mutation.attributeName, 
+                        mutation.oldValue,
+                        this.getAttribute(mutation.attributeName)
+                    );
+                }
+            });
+        });
+    }
+
+    setParameters(parameters = {}) {
+        this[PARAMS] = parameters;
         const paramNames = Object.keys(this[PARAMS]);
 
         this.params = {};
@@ -37,18 +53,6 @@ export default class HorizonsElement extends HTMLElement {
                 }
             }
             this.params[paramName] = value;
-        });
-        
-        this[OBSERVER] = new MutationObserver((mutations) => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes') {
-                    this.attributeChangedCallback(
-                        mutation.attributeName, 
-                        mutation.oldValue,
-                        this.getAttribute(mutation.attributeName)
-                    );
-                }
-            });
         });
     }
 
@@ -197,7 +201,24 @@ export default class HorizonsElement extends HTMLElement {
         return false;
     }
 
-    async setTemplate(template, { useShadow = false } = {}) {
+    getSlottedContent(slot = 'default') {
+        let content = [];
+        if (this.shadowRoot) {
+            if (slot !== 'default') {
+                content = this.querySelectorAll(`[slot="${slot}"]`);
+            }
+            else {
+                content = this.querySelectorAll(`:not([slot]),[slot=default]`);
+            }
+        }
+        else {
+            content = this.queryElement(`[replacing-slot="${slot}"]`).children;
+        }
+
+        return Array.prototype.map.call(content, c => c);
+    }
+
+    async setContent(template, { useShadow = false } = {}) {
         let slotted = null;
         this[ROOT_NODE] = document.createElement('div');
         this[ROOT_NODE].style.display = 'contents';

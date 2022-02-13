@@ -1,0 +1,32 @@
+.hzui-tabgroup {
+    display: flex;
+    flex-direction: column;
+}
+
+#tabs .tab-button {
+    background-color: #333;
+}
+
+#tabs .tab-button.selected {
+    background-color: #777;
+}
+
+#tabs[tab-position="left"] .tab-button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#tabs[tab-position="right"] .tab-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#tabs[tab-position="top"] .tab-button {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#tabs[tab-position="bottom"] .tab-button {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}

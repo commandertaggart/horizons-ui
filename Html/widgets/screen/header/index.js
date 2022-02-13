@@ -5,7 +5,7 @@ import HzUIIcon from '/widgets/ui/icon/index.js';
 
 export default async function HzUIScreenHeader(hzWidget) {
     await Promise.all([
-        hzWidget.setTemplate('/widgets/screen/header/template.html'),
+        hzWidget.setContent('/widgets/screen/header/template.html'),
         hzWidget.addStyles('/widgets/screen/header/style.css')
     ]);
 

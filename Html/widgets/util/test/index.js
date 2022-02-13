@@ -2,7 +2,7 @@
 import Test from '/horizons/test.js';
 
 export default async function HzTestWidget(hzWidget) {
-    await hzWidget.setTemplate('/widgets/util/test/template.html');
+    await hzWidget.setContent('/widgets/util/test/template.html');
 
     hzWidget.bindSystem(Test, {
         testBool: { onUpdate: 'setLabel', onclick: () => Test.testBool = !Test.testBool }, 
